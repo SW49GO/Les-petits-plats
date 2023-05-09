@@ -203,5 +203,78 @@ class RecipeData {
       );
     });
   }
-  getSearchByTagList() {}
+  getSearchByTagList() {
+    // Vérification si il y'a des tags
+    if (allTags.length == 0 && recipeAfterSearchPrincipal.length == 0) {
+      displayAllRecipes(recipesOriginal);
+    } else {
+      // Création d'un tableau contenant chaque mot de la liste de tags en elevant sa dernière lettre
+      // afin de gérer les singuliers et pluriels
+      const singularAndPlural = [];
+      allTags.forEach(({ word }) => {
+        // Division da chaine de mot par une ","
+        const words = word.split(",");
+        words.forEach((mot) => {
+          // Pour résoudre le problème de "Maïs" et "Maïzzena" -> "Maï"
+          if (mot.length > 4) {
+            // slice(début,fin) ->supprime le dernier caractère
+            singularAndPlural.push(mot.slice(0, -1));
+          } else {
+            singularAndPlural.push(mot);
+          }
+        });
+        console.log("singularAndPlural", singularAndPlural);
+      });
+      // console.log("singularAndPlural", singularAndPlural);
+      // Définition de la liste des recettes de départ généré ou pas par la recherche principal
+      const listRecipes =
+        recipeAfterSearchPrincipal.length > 0
+          ? recipeAfterSearchPrincipal
+          : recipesOriginal;
+
+      const recipesWithTag = listRecipes.filter((recipe) => {
+        // Création d'un objet Set vide, pour y ajouter les recettes non doublées qui remplissent les conditions
+        const wordsFound = new Set();
+        // Pour chaque Ingrédients
+        recipe.ingredients.forEach((ingredient) => {
+          // console.log("ingredient:", ingredient.ingredient);
+          // 1er lettre en minuscule de la liste des ingrédients pour les mots qui commence par une minuscule
+          const ingredientString =
+            ingredient.ingredient.charAt(0).toLowerCase +
+            ingredient.ingredient.slice(1);
+          console.log("ingredientString:", ingredientString);
+          singularAndPlural.forEach((word) => {
+            // Chaque mot 1ere lettre en minuscule
+            const wordLowerCase = word.charAt(0).toLowerCase + word.slice(1);
+            if (ingredientString.includes(wordLowerCase)) {
+              wordsFound.add(word);
+            }
+          });
+        });
+        // ET pour dans chaque Appareil
+        singularAndPlural.forEach((word) => {
+          if (recipe.appliance.includes(word)) {
+            wordsFound.add(word);
+          }
+        });
+        // Et dans la liste des Ustensiles
+        recipe.ustensils.forEach((ustensil) => {
+          // console.log(ustensil);
+          singularAndPlural.forEach((word) => {
+            if (ustensil.toUpperCase().includes(word.toUpperCase())) {
+              wordsFound.add(word);
+            }
+          });
+        });
+        // Si tout les mots de singularAndPlurial ont été trouvé dans wordsFound, retourne "true"
+        // Donc garde la recette en cours
+        return singularAndPlural.every((word) => wordsFound.has(word));
+      });
+
+      // console.log(recipesWithTag);
+
+      // Instanciation de la classe avec this.recipes=recipesWithTag pour l'affichage des recettes
+      displayAllRecipes(recipesWithTag);
+    }
+  }
 }
