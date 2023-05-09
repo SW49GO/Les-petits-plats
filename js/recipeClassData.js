@@ -6,10 +6,12 @@ class RecipeData {
     this.ingredients = this.getAllIngredients;
     this.appliances = this.getAllAppliances;
     this.ustensils = this.getAllUstensils;
+    this.recipePrincipal = this.getSearchPrincipal;
   }
   /**
    * Function to retrieve all Ingredients
    * Called by : displayListUnderSecondarySearch(recipes)
+   * * @returns {array}
    */
   getAllIngredients() {
     // Retrieve without duplicate (except for differences in accent and spelling mistakes)
@@ -26,6 +28,7 @@ class RecipeData {
   /**
    * Function to retrieve all Appliances
    * Called by : displayListUnderSecondarySearch(recipes)
+   * * @returns {array}
    */
   getAllAppliances() {
     const applianceData = this.recipes.map(({ appliance }) => appliance);
@@ -34,9 +37,11 @@ class RecipeData {
     this.appliances = applianceWithoutDuplicate;
     return applianceWithoutDuplicate;
   }
+
   /**
    * Function to retrieve all Ustensils
    * Called by : displayListUnderSecondarySearch(recipes)
+   * @returns {array}
    */
   getAllUstensils() {
     const ustensilData = this.recipes.map(({ ustensils }) => ustensils);
@@ -47,6 +52,33 @@ class RecipeData {
     console.log("ustensilWithoutDuplicate:", ustensilWithoutDuplicate);
     this.ustensils = ustensilWithoutDuplicate;
     return ustensilWithoutDuplicate;
+  }
+  /**
+   * Function to retrieve recipes according to the search word
+   * If it appears in the Title, Ingredients and Description of the recipes
+   * @param {string} inputWord
+   */
+  getSearchPrincipal(inputWord) {
+    console.log("Entre dans getSearchPrincipal");
+    // console.log("getSearch", word);
+    // console.log("recipes=", this.recipes);
+    // La méthode some() teste si au moins un élément du tableau passe le test implémenté par la fonction fournie.
+    // Elle renvoie un booléen indiquant le résultat du test.
+    const newRecipe = this.recipes.filter(
+      (recipe) =>
+        removeAccentsUppercase(recipe.name).includes(inputWord) ||
+        removeAccentsUppercase(recipe.description).includes(inputWord) ||
+        recipe.ingredients.some((ingredient) =>
+          removeAccentsUppercase(ingredient.ingredient).includes(inputWord)
+        )
+    );
+
+    // Remplacement de la liste des recettes par celle qui découle de la recherche principal
+    this.recipePrincipal = newRecipe;
+    // console.log("newRecipe:", newRecipe);
+    if (newRecipe) {
+      this.recipes = newRecipe;
+    }
   }
   /**
    * Function to build Html elements of all recipes

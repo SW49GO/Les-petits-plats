@@ -4,14 +4,18 @@
 const containerIngredient = document.querySelector(".list-ingredients");
 const containerAppliance = document.querySelector(".list-appliances");
 const containerUstensil = document.querySelector(".list-ustensils");
+// Input principal search
+const searchPrincipal = document.querySelector(".search");
 
 /**
  * Function to remove accents and capitalize the searched word
- * @param {string} word
+ * @param {string} inputWord
  * @returns
  */
-const removeAccentsUppercase = (word) => {
-  const normalizedWord = word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+const removeAccentsUppercase = (inputWord) => {
+  const normalizedWord = inputWord
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
   return normalizedWord.toUpperCase();
 };
 
@@ -43,8 +47,8 @@ function removeDuplicate(array) {
   // console.log("unique:", unique);
 
   // New table with changes to words to be uniquely replaced
-  const uniqueTransformed = unique.reduce((acc, word) => {
-    const transformedWord = word
+  const uniqueTransformed = unique.reduce((acc, inputWord) => {
+    const transformedWord = inputWord
       .replace("Casserolle", "Casserole")
       .replace(/\bPomme\b/gi, "Pommes")
       .replace(/\bKiwi\b/gi, "Kiwis")
