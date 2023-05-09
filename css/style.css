@@ -58,11 +58,6 @@ header {
 }
 
 /**********************SECONDARY SEARCH****************************/
-.container-tags {
-  width: 90%;
-  margin: 0 auto;
-  margin-bottom: 1rem;
-}
 
 .container-secondary-search {
   display: flex;
@@ -192,4 +187,18 @@ header {
   color: #fff;
   padding: 0.3rem;
   text-align: left;
+}
+/******************Tags*****************************/
+.container-tags {
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+}
+.container-tags span {
+  padding: 0.3rem 0.6rem;
+  margin-right: 1rem;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: 0.3rem;
 }

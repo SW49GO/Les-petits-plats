@@ -3,6 +3,7 @@
 // Array to storage the differents datas
 let recipesOriginal = [];
 let recipeAfterSearchPrincipal = [];
+let allTags = [];
 
 /**
  * Function to retrieve data from recipes.json file

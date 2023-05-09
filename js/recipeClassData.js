@@ -135,5 +135,73 @@ class RecipeData {
     this.ustensils.forEach((ustensil) => {
       containerUstensil.innerHTML += `<button class="button-ustensil">${ustensil}</button>`;
     });
+
+    /**
+     * Function
+     * @param {string} classe
+     * @param {string} categorie
+     */
+    const self = this;
+    function eventsToButtons(classe, categorie) {
+      const allButtons = document.querySelectorAll(classe);
+      allButtons.forEach((element) => {
+        if (element.style.display !== "none") {
+          element.addEventListener("click", function (e) {
+            console.log("element:", element);
+            const tag = { word: e.target.textContent, button: categorie };
+            allTags.push(tag);
+            self.setDisplayTags(tag);
+          });
+        }
+      });
+    }
+    eventsToButtons(".button-ingredient", "ingredient");
+    eventsToButtons(".button-appliance", "appliance");
+    eventsToButtons(".button-ustensil", "ustensil");
   }
+  setDisplayTags(objectTag) {
+    // Reception de l'objet séléctionné
+    // console.log(objectTag);
+    // Création du tag
+    let bgColor;
+
+    switch (objectTag.button) {
+      case "ingredient":
+        bgColor = "#3282f7";
+        break;
+      case "ustensil":
+        bgColor = "#ed6454";
+        break;
+      default:
+        bgColor = "#68d9a4";
+    }
+    // Création dans le DOM du tag
+    const containerTags = document.querySelector(".container-tags");
+    const spanTag = document.createElement("span");
+    spanTag.style.backgroundColor = bgColor;
+    spanTag.innerHTML = `${objectTag.word} &emsp;<i class="fa-regular fa-circle-xmark"></i>`;
+    containerTags.appendChild(spanTag);
+    //
+    this.getSearchByTagList();
+
+    // Gestion de la suppression d'un tag
+    const deleteTags = document.querySelectorAll(".fa-circle-xmark");
+    deleteTags.forEach((element) => {
+      element.addEventListener(
+        "click",
+        function (e) {
+          // Noeud parent de l'icône
+          const spanOfTag = e.target.parentNode;
+          //Texte du span sans espace, ni saut de lignes
+          const tagText = spanOfTag.textContent.trim();
+          // Enlever le tag dans le tableau "allTags"
+          allTags = allTags.filter((tag) => tag.word !== tagText);
+          // Supression du Tag
+          spanOfTag.remove();
+          this.getSearchByTagList();
+        }.bind(this)
+      );
+    });
+  }
+  getSearchByTagList() {}
 }

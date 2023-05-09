@@ -44,7 +44,7 @@ function removeDuplicate(array) {
 
   // Sorting in alphabetical order according to the French standard
   unique.sort((a, b) => a.localeCompare(b, "fr"));
-  // console.log("unique:", unique);
+  console.log("unique:", unique);
 
   // New table with changes to words to be uniquely replaced
   const uniqueTransformed = unique.reduce((acc, inputWord) => {
