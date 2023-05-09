@@ -1,12 +1,39 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 class RecipeData {
   constructor(data) {
     this.recipes = data;
   }
   /**
-   * Function to build Html elements of all recipes
+   * Function to retrieve all Ingredients
+   * Called by : displayListUnderSecondarySearch(recipes)
    */
-  getDisplayRecipes() {
+  getAllIngredients() {
+    // Retrieve without duplicate (except for differences in accent and spelling mistakes)
+    const listIngredientsData = this.recipes.reduce((acc, { ingredients }) => {
+      return [...acc, ...ingredients.map(({ ingredient }) => ingredient)];
+    }, []);
+    // console.log("listIngredientData", listIngredientsData);
+    // Retrieve data after passed in function "removeDuplicate"
+    const ingredientWithoutDuplicate = removeDuplicate(listIngredientsData);
+    console.log("ingredientWithoutDuplicate:", ingredientWithoutDuplicate);
+    return ingredientWithoutDuplicate;
+  }
+  /**
+   * Function to retrieve all Appliances
+   * Called by : displayListUnderSecondarySearch(recipes)
+   */
+  getAllAppliances() {}
+  /**
+   * Function to retrieve all Ustensils
+   * Called by : displayListUnderSecondarySearch(recipes)
+   */
+  getAllUstensils() {}
+  /**
+   * Function to build Html elements of all recipes
+   * Called by : displayAllRecipes(recipes)
+   */
+  setDisplayRecipes() {
     // Création des éléments HTML
     let containerHTML;
     containerHTML = `<div class="container-articles">`;
