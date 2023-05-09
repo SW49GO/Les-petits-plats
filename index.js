@@ -48,6 +48,8 @@ async function displayListUnderSecondarySearch(recipes) {
   listUnderSearch.getAllIngredients();
   listUnderSearch.getAllAppliances();
   listUnderSearch.getAllUstensils();
+  // Display the different lists
+  listUnderSearch.setDisplayListUnderAdvanceSearch();
 }
 /**
  * Initialization function

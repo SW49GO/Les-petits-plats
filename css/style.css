@@ -160,3 +160,36 @@ header {
 .composition p {
   text-align: left;
 }
+/****************Display Lists*************************/
+.list-appliances,
+.list-ustensils,
+.list-ingredients {
+  position: relative;
+  column-count: 3;
+  border-radius: 0 0 0.5rem 0.5rem;
+  font-size: 1.125rem;
+  color: #fff;
+  padding: 0.5rem;
+  z-index: 1;
+}
+.list-ingredients,
+.button-ingredient {
+  background-color: #3282f7;
+}
+.list-appliances,
+.button-appliance {
+  background-color: #68d9a4;
+}
+.list-ustensils,
+.button-ustensil {
+  background-color: #ed6454;
+}
+.button-ingredient,
+.button-appliance,
+.button-ustensil {
+  display: block;
+  border: none;
+  color: #fff;
+  padding: 0.3rem;
+  text-align: left;
+}

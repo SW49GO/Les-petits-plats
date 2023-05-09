@@ -3,6 +3,9 @@
 class RecipeData {
   constructor(data) {
     this.recipes = data;
+    this.ingredients = this.getAllIngredients;
+    this.appliances = this.getAllAppliances;
+    this.ustensils = this.getAllUstensils;
   }
   /**
    * Function to retrieve all Ingredients
@@ -17,6 +20,7 @@ class RecipeData {
     // Retrieve data after passed in function "removeDuplicate"
     const ingredientWithoutDuplicate = removeDuplicate(listIngredientsData);
     console.log("ingredientWithoutDuplicate:", ingredientWithoutDuplicate);
+    this.ingredients = ingredientWithoutDuplicate;
     return ingredientWithoutDuplicate;
   }
   /**
@@ -27,6 +31,7 @@ class RecipeData {
     const applianceData = this.recipes.map(({ appliance }) => appliance);
     const applianceWithoutDuplicate = removeDuplicate(applianceData);
     console.log("applianceWithoutDuplicate:", applianceWithoutDuplicate);
+    this.appliances = applianceWithoutDuplicate;
     return applianceWithoutDuplicate;
   }
   /**
@@ -40,6 +45,7 @@ class RecipeData {
     const listUstensilDatas = ustensilData.flat();
     const ustensilWithoutDuplicate = removeDuplicate(listUstensilDatas);
     console.log("ustensilWithoutDuplicate:", ustensilWithoutDuplicate);
+    this.ustensils = ustensilWithoutDuplicate;
     return ustensilWithoutDuplicate;
   }
   /**
@@ -82,5 +88,20 @@ class RecipeData {
 
     // console.log("recette après le displayRecipe", this.recipes);
     return containerHTML;
+  }
+  setDisplayListUnderAdvanceSearch() {
+    console.log("this.ingredient:", this.ingredients);
+    containerIngredient.innerHTML = "";
+    this.ingredients.forEach((ingredient) => {
+      containerIngredient.innerHTML += `<button class="button-ingredient">${ingredient}</button>`;
+    });
+    containerAppliance.innerHTML = "";
+    this.appliances.forEach((appliance) => {
+      containerAppliance.innerHTML += `<button class="button-appliance">${appliance}</button>`;
+    });
+    containerUstensil.innerHTML = "";
+    this.ustensils.forEach((ustensil) => {
+      containerUstensil.innerHTML += `<button class="button-ustensil">${ustensil}</button>`;
+    });
   }
 }

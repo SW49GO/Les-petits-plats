@@ -1,4 +1,10 @@
 /* eslint-disable no-unused-vars */
+// Declare DOM Elements
+// Containers of each List
+const containerIngredient = document.querySelector(".list-ingredients");
+const containerAppliance = document.querySelector(".list-appliances");
+const containerUstensil = document.querySelector(".list-ustensils");
+
 /**
  * Function to remove accents and capitalize the searched word
  * @param {string} word
@@ -17,8 +23,8 @@ const removeAccentsUppercase = (word) => {
  */
 function removeDuplicate(array) {
   // console.log("array:", array);
-  // Utilisation de la méthode "reduce" pour ne parcourir qu'une seule fois le tableau
-  // et renvoi le résulat du tableau "original"
+  // Use the "reduce" method to traverse the array only once
+  // and returns the result of the "original" array
   const unique = array.reduce(
     (acc, curr) => {
       const normalizedCurr = removeAccentsUppercase(curr);
@@ -32,11 +38,11 @@ function removeDuplicate(array) {
     { normalized: [], original: [] }
   ).original; //-> return original=['Pomme']
 
-  // Tri par ordre alphabétique selon la norme française
+  // Sorting in alphabetical order according to the French standard
   unique.sort((a, b) => a.localeCompare(b, "fr"));
   // console.log("unique:", unique);
 
-  // Nouveau tableau avec les modifications à apporter aux mots à remplacer de façon unique
+  // New table with changes to words to be uniquely replaced
   const uniqueTransformed = unique.reduce((acc, word) => {
     const transformedWord = word
       .replace("Casserolle", "Casserole")
