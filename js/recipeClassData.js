@@ -23,12 +23,25 @@ class RecipeData {
    * Function to retrieve all Appliances
    * Called by : displayListUnderSecondarySearch(recipes)
    */
-  getAllAppliances() {}
+  getAllAppliances() {
+    const applianceData = this.recipes.map(({ appliance }) => appliance);
+    const applianceWithoutDuplicate = removeDuplicate(applianceData);
+    console.log("applianceWithoutDuplicate:", applianceWithoutDuplicate);
+    return applianceWithoutDuplicate;
+  }
   /**
    * Function to retrieve all Ustensils
    * Called by : displayListUnderSecondarySearch(recipes)
    */
-  getAllUstensils() {}
+  getAllUstensils() {
+    const ustensilData = this.recipes.map(({ ustensils }) => ustensils);
+    // La méthode flat() permet de créer un nouveau tableau contenant les éléments
+    // des sous-tableaux du tableau passé en argument, qui sont concaténés récursivement
+    const listUstensilDatas = ustensilData.flat();
+    const ustensilWithoutDuplicate = removeDuplicate(listUstensilDatas);
+    console.log("ustensilWithoutDuplicate:", ustensilWithoutDuplicate);
+    return ustensilWithoutDuplicate;
+  }
   /**
    * Function to build Html elements of all recipes
    * Called by : displayAllRecipes(recipes)

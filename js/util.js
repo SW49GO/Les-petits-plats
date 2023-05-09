@@ -30,7 +30,8 @@ function removeDuplicate(array) {
       return acc; // ex: {normalizes=['POMME'], original=['Pomme']}
     },
     { normalized: [], original: [] }
-  ).original;
+  ).original; //-> return original=['Pomme']
+
   // Tri par ordre alphabétique selon la norme française
   unique.sort((a, b) => a.localeCompare(b, "fr"));
   // console.log("unique:", unique);
