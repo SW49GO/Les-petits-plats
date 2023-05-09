@@ -1,0 +1,111 @@
+:root {
+  --font-default: "lato", Arial, sans-serif;
+  --font-secondary: "roboto", Arial, sans-serif;
+}
+* {
+  font-family: var(--font-default);
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+input {
+  padding-left: 0.5rem;
+}
+::placeholder {
+  font-size: 1rem;
+  color: #fff;
+}
+
+/***************************************HEADER***********************************************/
+header {
+  width: 100%;
+  color: #d04f4f;
+  text-align: center;
+  padding-top: 1rem;
+}
+
+/***********************************PRINCIPAL SEARCH*****************************************/
+.main-search {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  height: 3rem;
+  text-align: center;
+  background-color: #e7e7e7;
+  border-radius: 0.3rem;
+  margin: 1.5rem auto;
+}
+.search {
+  width: 96%;
+  border: none;
+  border-radius: 0.3rem;
+  height: 3rem;
+  background-color: #e7e7e7;
+  padding-left: 1rem;
+  font-size: 1.125rem;
+}
+.search:focus {
+  outline: none;
+}
+.search::placeholder {
+  font-size: 1.125rem;
+  color: #c7bebe;
+  padding-left: 0.5rem;
+}
+.fa-magnifying-glass {
+  padding-right: 0.5rem;
+  color: #000;
+}
+
+/**********************SECONDARY SEARCH****************************/
+.container-tags {
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+}
+
+.container-secondary-search {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  height: 6rem;
+}
+.container-ingredient,
+.container-appliance,
+.container-ustensil {
+  margin-right: 1.5rem;
+}
+.input-ingredient,
+.input-appliance,
+.input-ustensil {
+  position: relative;
+}
+.input-ingredient > input {
+  background-color: #3282f7;
+  outline-color: #3282f7;
+}
+.input-appliance > input {
+  background-color: #68d9a4;
+  outline-color: #68d9a4;
+}
+.input-ustensil > input {
+  background-color: #ed6454;
+  outline-color: #ed6454;
+}
+.input-ingredient > input,
+.input-appliance > input,
+.input-ustensil > input {
+  width: 10rem;
+  height: 4rem;
+  border: none;
+  border-radius: 0.5rem;
+  color: #fff;
+  outline: none;
+  border: none;
+}
+.fa-chevron-down {
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+  color: #fff;
+}

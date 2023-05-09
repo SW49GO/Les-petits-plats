@@ -1,12 +1,77 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Les petits plats, site de recettes de cuisine"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" href="./assets/Toq.ico" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/d89d263f02.js"
+      crossorigin="anonymous"
+    ></script>
     <title>Les petits plats</title>
-</head>
-<body>
-    
-</body>
+  </head>
+  <header>
+    <div>
+      <img src="./assets/Toq.svg" alt="Logo du site - Toque" />
+    </div>
+    <h1>Les petits plats</h1>
+  </header>
+  <main>
+    <!-- Principal Search -->
+    <div class="main-search">
+      <input
+        class="search"
+        type="text"
+        name="search"
+        placeholder="Rechercher une recette"
+      />
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+    <!-- Container for all Tags -->
+    <div class="container-tags"></div>
+    <!-- Secondary Search -->
+    <div class="container-secondary-search">
+      <div class="container-ingredient">
+        <div class="input-ingredient">
+          <input type="text" placeholder="Ingrédients" /><i
+            class="fa-solid fa-chevron-down"
+          ></i>
+        </div>
+        <div class="list-ingredients"></div>
+      </div>
+      <div class="container-appliance">
+        <div class="input-appliance">
+          <input type="text" placeholder="Appareils" />
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="list-appliances"></div>
+      </div>
+      <div class="container-ustensil">
+        <div class="input-ustensil">
+          <input type="text" placeholder="Ustensiles" />
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="list-ustensils"></div>
+      </div>
+    </div>
+    <!-- Container for result of search recipes -->
+    <div class="container-recipes"></div>
+    <!-- Container to display selected recipe -->
+    <div class="container-modal hidden"></div>
+  </main>
+  <script src="index.js"></script>
+  <body></body>
 </html>
