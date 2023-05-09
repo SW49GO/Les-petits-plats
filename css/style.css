@@ -109,3 +109,54 @@ header {
   top: 1.5rem;
   color: #fff;
 }
+/*********************Display Recipes*******************************/
+.container-articles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+  width: 90%;
+  margin: 0 auto;
+}
+.link-recipe {
+  border: none;
+}
+.article-recipe {
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.3rem;
+  overflow: hidden;
+}
+.article-picture {
+  width: 100%;
+  height: 12rem;
+  background-color: #c7bebe;
+}
+.article-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #e7e7e7;
+  padding: 0.8rem;
+}
+.article-description {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  height: 8rem;
+  font-size: 0.75rem;
+  padding: 1rem;
+  background-color: #e7e7e7;
+}
+.description p,
+.composition p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  text-align: justify;
+  font-family: var(--font-secondary);
+  padding-right: 1em;
+}
+.composition p {
+  text-align: left;
+}
