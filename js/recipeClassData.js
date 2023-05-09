@@ -85,41 +85,48 @@ class RecipeData {
    * Called by : displayAllRecipes(recipes)
    */
   setDisplayRecipes() {
-    // Création des éléments HTML
-    let containerHTML;
-    containerHTML = `<div class="container-articles">`;
+    if (this.recipes.length == 0) {
+      let containerNoRecipes = `<div class="no-recipes"> <p>Aucune recette ne correspond à votre critère</p><p>Vous pouvez
+      chercher « tarte aux pommes », « poisson » etc...</p>
+      </div>`;
+      return containerNoRecipes;
+    } else {
+      // Création des éléments HTML
+      let containerHTML;
+      containerHTML = `<div class="container-articles">`;
 
-    this.recipes.forEach((recipe) => {
-      // HTML de chaque carte de recette
-      containerHTML += `<button class="link-recipe" onclick="displayModal(${recipe.id})"><article class="article-recipe">
+      this.recipes.forEach((recipe) => {
+        // HTML de chaque carte de recette
+        containerHTML += `<button class="link-recipe" onclick="displayModal(${recipe.id})"><article class="article-recipe">
             <div class="article-picture"></div>
             <div class="article-header">
-                <p>${recipe.name}</p>
+                <p class="title-recipe">${recipe.name}</p>
                 <p><i class="fa-regular fa-clock"></i> ${recipe.time} mn</p>
             </div><div class="article-description">
             <div class="composition"><p>`;
 
-      recipe.ingredients.forEach((ingredient) => {
-        let quantity = ingredient.quantity ? ingredient.quantity : "";
-        let unit = ingredient.unit || "";
-        if (unit === "grammes") {
-          unit = "gr";
-        }
-        containerHTML += `${ingredient.ingredient}: ${quantity} ${unit}<br>`;
-      });
+        recipe.ingredients.forEach((ingredient) => {
+          let quantity = ingredient.quantity ? ingredient.quantity : "";
+          let unit = ingredient.unit || "";
+          if (unit === "grammes") {
+            unit = "gr";
+          }
+          containerHTML += `${ingredient.ingredient}: ${quantity} ${unit}<br>`;
+        });
 
-      containerHTML += `</p></div>
+        containerHTML += `</p></div>
                          <div class="description">
                             <p >${recipe.description}</p>
                         </div>
                     </div>
                 </article></button>`;
-    });
+      });
 
-    containerHTML += `</div>`;
+      containerHTML += `</div>`;
 
-    // console.log("recette après le displayRecipe", this.recipes);
-    return containerHTML;
+      // console.log("recette après le displayRecipe", this.recipes);
+      return containerHTML;
+    }
   }
   setDisplayListUnderAdvanceSearch() {
     console.log("this.ingredient:", this.ingredients);
@@ -158,6 +165,22 @@ class RecipeData {
     eventsToButtons(".button-ingredient", "ingredient");
     eventsToButtons(".button-appliance", "appliance");
     eventsToButtons(".button-ustensil", "ustensil");
+
+    // Management of the 3 Inputs on the 3 categories
+    inputSearchElements.forEach((inputSearchElement) => {
+      inputSearchElement.element.addEventListener("input", function (e) {
+        const inputValue = removeAccentsUppercase(e.target.value);
+        const listButtonUnder = document.querySelectorAll(
+          inputSearchElement.buttonClass
+        );
+        listButtonUnder.forEach((button) => {
+          const buttonText = removeAccentsUppercase(button.textContent);
+          button.style.display = buttonText.includes(inputValue)
+            ? "block"
+            : "none";
+        });
+      });
+    });
   }
   setDisplayTags(objectTag) {
     // Reception de l'objet séléctionné
@@ -175,7 +198,7 @@ class RecipeData {
       default:
         bgColor = "#68d9a4";
     }
-    // Création dans le DOM du tag
+    // Creation in the DOM of the tag
     const containerTags = document.querySelector(".container-tags");
     const spanTag = document.createElement("span");
     spanTag.style.backgroundColor = bgColor;
@@ -184,19 +207,17 @@ class RecipeData {
     //
     this.getSearchByTagList();
 
-    // Gestion de la suppression d'un tag
+    // Management of the deletion of a tag
     const deleteTags = document.querySelectorAll(".fa-circle-xmark");
     deleteTags.forEach((element) => {
       element.addEventListener(
         "click",
         function (e) {
-          // Noeud parent de l'icône
+          // Icon parent node
           const spanOfTag = e.target.parentNode;
-          //Texte du span sans espace, ni saut de lignes
           const tagText = spanOfTag.textContent.trim();
-          // Enlever le tag dans le tableau "allTags"
+          // Remove the tag from the "allTags" array
           allTags = allTags.filter((tag) => tag.word !== tagText);
-          // Supression du Tag
           spanOfTag.remove();
           this.getSearchByTagList();
         }.bind(this)
@@ -204,20 +225,18 @@ class RecipeData {
     });
   }
   getSearchByTagList() {
-    // Vérification si il y'a des tags
+    // Check if there are already tags
     if (allTags.length == 0 && recipeAfterSearchPrincipal.length == 0) {
       displayAllRecipes(recipesOriginal);
     } else {
-      // Création d'un tableau contenant chaque mot de la liste de tags en elevant sa dernière lettre
-      // afin de gérer les singuliers et pluriels
+      // Create an array containing each word in the list of tags by raising its last letter
+      // in order to manage singulars and plurals
       const singularAndPlural = [];
       allTags.forEach(({ word }) => {
-        // Division da chaine de mot par une ","
         const words = word.split(",");
         words.forEach((mot) => {
-          // Pour résoudre le problème de "Maïs" et "Maïzzena" -> "Maï"
+          // To solve the problem of "Maïs" and "Maïzzena" -> "Maï", "mot" must be > 4
           if (mot.length > 4) {
-            // slice(début,fin) ->supprime le dernier caractère
             singularAndPlural.push(mot.slice(0, -1));
           } else {
             singularAndPlural.push(mot);
@@ -226,38 +245,40 @@ class RecipeData {
         console.log("singularAndPlural", singularAndPlural);
       });
       // console.log("singularAndPlural", singularAndPlural);
-      // Définition de la liste des recettes de départ généré ou pas par la recherche principal
+      // Definition of the list of current recipes generated or not by the main search
       const listRecipes =
         recipeAfterSearchPrincipal.length > 0
           ? recipeAfterSearchPrincipal
           : recipesOriginal;
 
       const recipesWithTag = listRecipes.filter((recipe) => {
-        // Création d'un objet Set vide, pour y ajouter les recettes non doublées qui remplissent les conditions
+        // Create an empty Set object, to add unduplicated recipes that meet the conditions
         const wordsFound = new Set();
-        // Pour chaque Ingrédients
+
         recipe.ingredients.forEach((ingredient) => {
           // console.log("ingredient:", ingredient.ingredient);
-          // 1er lettre en minuscule de la liste des ingrédients pour les mots qui commence par une minuscule
-          const ingredientString =
+          // Lowercase the 1st letter of the words "ingredient" and "singularAndPlural" to handle words starting with a lowercase
+          const ingredientFirstLowerCase =
             ingredient.ingredient.charAt(0).toLowerCase +
             ingredient.ingredient.slice(1);
-          console.log("ingredientString:", ingredientString);
+
           singularAndPlural.forEach((word) => {
-            // Chaque mot 1ere lettre en minuscule
-            const wordLowerCase = word.charAt(0).toLowerCase + word.slice(1);
-            if (ingredientString.includes(wordLowerCase)) {
+            const singularAndPluralFirstLowerCase =
+              word.charAt(0).toLowerCase + word.slice(1);
+            if (
+              ingredientFirstLowerCase.includes(singularAndPluralFirstLowerCase)
+            ) {
               wordsFound.add(word);
             }
           });
         });
-        // ET pour dans chaque Appareil
+        // AND for in each Device
         singularAndPlural.forEach((word) => {
           if (recipe.appliance.includes(word)) {
             wordsFound.add(word);
           }
         });
-        // Et dans la liste des Ustensiles
+        // And in the list of Utensils
         recipe.ustensils.forEach((ustensil) => {
           // console.log(ustensil);
           singularAndPlural.forEach((word) => {
@@ -266,14 +287,14 @@ class RecipeData {
             }
           });
         });
-        // Si tout les mots de singularAndPlurial ont été trouvé dans wordsFound, retourne "true"
-        // Donc garde la recette en cours
+        // If all the words of "singularAndPlurial" were found in "wordsFound", return "true"
+        // So keep the current recipe
         return singularAndPlural.every((word) => wordsFound.has(word));
       });
 
       // console.log(recipesWithTag);
 
-      // Instanciation de la classe avec this.recipes=recipesWithTag pour l'affichage des recettes
+      // Instantiating the class with "this.recipes=recipesWithTag" to generate the recipes display
       displayAllRecipes(recipesWithTag);
     }
   }

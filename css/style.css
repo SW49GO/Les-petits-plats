@@ -15,6 +15,9 @@ input {
   font-size: 1rem;
   color: #fff;
 }
+.hidden {
+  display: none;
+}
 
 /***************************************HEADER***********************************************/
 header {
@@ -123,7 +126,7 @@ header {
 }
 .article-picture {
   width: 100%;
-  height: 12rem;
+  height: 10rem;
   background-color: #c7bebe;
 }
 .article-header {
@@ -131,6 +134,11 @@ header {
   justify-content: space-between;
   background-color: #e7e7e7;
   padding: 0.8rem;
+  height: 3rem;
+}
+.title-recipe {
+  text-align: left;
+  width: 75%;
 }
 .article-description {
   display: grid;
@@ -150,10 +158,16 @@ header {
   -webkit-box-orient: vertical;
   text-align: justify;
   font-family: var(--font-secondary);
-  padding-right: 1em;
 }
 .composition p {
   text-align: left;
+}
+.no-recipes {
+  width: 50%;
+  text-align: center;
+  line-height: 2rem;
+  font-weight: 700;
+  margin: 5rem auto;
 }
 /****************Display Lists*************************/
 .list-appliances,
@@ -187,6 +201,9 @@ header {
   color: #fff;
   padding: 0.3rem;
   text-align: left;
+}
+.dropdown-list {
+  min-width: 20rem;
 }
 /******************Tags*****************************/
 .container-tags {
