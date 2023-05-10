@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 // Declare DOM Elements
 // Containers of each List
@@ -6,6 +7,10 @@ const containerAppliance = document.querySelector(".list-appliances");
 const containerUstensil = document.querySelector(".list-ustensils");
 // Input principal search
 const searchPrincipal = document.querySelector(".search");
+// Container modal
+const modal = document.querySelector(".container-modal");
+// Container all recipes
+const containerRecipes = document.querySelector(".container-recipes");
 // Input selector for "Ingredients, Appliances and Ustensls"
 const inputSearchElements = [
   {
@@ -152,3 +157,29 @@ inputSearchElements.forEach(function (inputSearchElement, index) {
     containerElement
   );
 });
+
+async function displayModal(id) {
+  const recipes = await getJsonDataRecipes();
+  // Trouver la recette correspondante
+  const theRecipe = recipes.recipes.find((recipe) => recipe.id === id);
+
+  containerRecipes.style.display = "none";
+  modal.classList.toggle("hidden");
+
+  let article = `<h1>${theRecipe.name}<i class="fa-solid fa-xmark" onclick="closeModal()"></i></h1><article class="modal-article"><div class="recipe-picture"></div><p class="serving">${theRecipe.name} pour ${theRecipe.servings} personne(s)</p><p>Temps de préparation : ${theRecipe.time} mn</p><div class="theIngredients"><h2>Liste des ingrédients :</h2>`;
+  theRecipe.ingredients.forEach((ingredient) => {
+    const unit = ingredient.unit || "";
+    article += `<p>${ingredient.ingredient} : ${ingredient.quantity} ${unit}</p>`;
+  });
+  article += `</div><div class="theAppliances"><h2>Liste des appareils et ustensiles nécessaire</h2><p>Appareil(s) : ${theRecipe.appliance}</p><p>Ustensile(s) : ${theRecipe.ustensils}</p></div><div class="theDescription"><h2>Description :</h2>`;
+  const descriptionTab = theRecipe.description.split(".");
+  for (const description of descriptionTab) {
+    article += `<p>- ${description}</p><br>`;
+  }
+  article += `</div></article>`;
+  modal.innerHTML = article;
+}
+function closeModal() {
+  modal.classList.toggle("hidden");
+  containerRecipes.style.display = "block";
+}

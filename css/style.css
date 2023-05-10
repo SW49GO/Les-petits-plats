@@ -247,3 +247,66 @@ header {
   font-weight: 700;
   border-radius: 0.3rem;
 }
+/********************Modal recipe********************************/
+.container-modal {
+  width: 80%;
+  height: 80%;
+  margin: 0 auto;
+  padding-bottom: 5rem;
+  background-color: #e7e7e7;
+}
+.recipe-picture {
+  width: 80%;
+  height: 20rem;
+  margin: 0 auto;
+  border: 0.3rem solid #000;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+}
+h1 {
+  position: relative;
+  font-size: 2rem;
+  width: 80%;
+  text-align: center;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #ed6454;
+}
+h2 {
+  font-size: 1.3rem;
+  padding: 1rem;
+}
+.fa-xmark {
+  position: absolute;
+  top: 1rem;
+  right: -4rem;
+}
+.modal-article {
+  padding: 2rem;
+}
+.theIngredients,
+.theAppliances,
+.theDescription {
+  margin: 1rem;
+}
+.theDescription {
+  font-size: 1.3rem;
+  line-height: 1.5rem;
+}
+.theDescription h2 {
+  text-decoration: underline;
+}
+.theIngredients h2 {
+  color: #3282f7;
+}
+.theIngredients p,
+.theAppliances p {
+  padding-left: 2rem;
+}
+.theAppliances h2 {
+  color: #d04f4f;
+}
+.serving {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}

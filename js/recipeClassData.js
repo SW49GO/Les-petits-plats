@@ -59,11 +59,6 @@ class RecipeData {
    * @param {string} inputWord
    */
   getSearchPrincipal(inputWord) {
-    // console.log("Entre dans getSearchPrincipal");
-    // console.log("getSearch", word);
-    // console.log("recipes=", this.recipes);
-    // La méthode some() teste si au moins un élément du tableau passe le test implémenté par la fonction fournie.
-    // Elle renvoie un booléen indiquant le résultat du test.
     const newRecipe = this.recipes.filter(
       (recipe) =>
         removeAccentsUppercase(recipe.name).includes(inputWord) ||
