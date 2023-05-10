@@ -75,7 +75,7 @@ function removeDuplicate(array) {
 
   // Sorting in alphabetical order according to the French standard
   unique.sort((a, b) => a.localeCompare(b, "fr"));
-  console.log("unique:", unique);
+  // console.log("unique:", unique);
 
   // New table with changes to words to be uniquely replaced
   const uniqueTransformed = unique.reduce((acc, inputWord) => {
@@ -103,83 +103,52 @@ function removeDuplicate(array) {
  * @param {string*} chevronElement -> HTML element
  * @param {string} containerElement -> HTML element
  */
+
 function setupInputSearchElements(
   inputSearchElement,
   chevronElement,
   containerElement
 ) {
-  // Chevron in its normal, "unreturned" state
-  let isRotated = false;
-
   chevronElement.addEventListener("click", function () {
+    console.log("click");
+
     const inputSearch = inputSearchElement.element;
-    console.log(`inputSearch ${inputSearchElement}:`, inputSearch);
-    // Inversion of the original state
-    isRotated = !isRotated;
-    if (isRotated) {
-      chevronElement.style.transform = "rotate(180deg)";
-      inputSearch.placeholder = `Rechercher un ${inputSearchElement.buttonClass.slice(
-        8
-      )}`;
-      inputSearch.style.width = "100%";
-      inputSearch.style.borderRadius = "0.5rem 0.5rem 0 0";
-      inputSearch.disabled = true;
-    } else {
-      let namePlaceholder;
-      if (inputSearchElement.buttonClass.slice(8).charAt(0) === "i") {
-        namePlaceholder = "Ingrédients";
-      } else if (inputSearchElement.buttonClass.slice(8).charAt(0) === "a") {
-        namePlaceholder = "Appareils";
-      } else {
-        namePlaceholder = "Ustensiles";
-      }
-      chevronElement.style.transform = "rotate(0deg)";
-      inputSearch.placeholder = namePlaceholder;
-      inputSearch.style.width = "10rem";
-      inputSearch.style.borderRadius = "0.5rem";
-      inputSearch.disabled = false;
-    }
-    containerElement.classList.toggle("hidden");
+    chevronElement.classList.toggle("rotated");
+
+    const buttonClass = inputSearchElement.buttonClass.slice(8);
+    const isIngredient = buttonClass.startsWith("i");
+    const isAppareil = buttonClass.startsWith("a");
+    const placeholder = isIngredient
+      ? "Ingrédients"
+      : isAppareil
+      ? "Appareils"
+      : "Ustensiles";
+
+    inputSearch.placeholder = chevronElement.classList.contains("rotated")
+      ? `Rechercher un ${placeholder}`
+      : placeholder;
+
+    inputSearch.classList.toggle("open");
+    containerElement.style.display = inputSearch.classList.contains("open")
+      ? "block"
+      : "none";
+    inputSearch.classList.remove(
+      inputSearch.classList.contains("open") ? "close" : "changePlaceholder"
+    );
+    inputSearch.classList.add(
+      inputSearch.classList.contains("open") ? "changePlaceholder" : "close"
+    );
   });
 }
 
 inputSearchElements.forEach(function (inputSearchElement, index) {
   const chevronElement = document.querySelectorAll(".fa-chevron-down")[index];
   const containerElement = document.querySelectorAll(".dropdown-list")[index];
+  console.log("containerElement:", containerElement);
 
   setupInputSearchElements(
     inputSearchElement,
     chevronElement,
     containerElement
   );
-});
-
-inputSearchElements.forEach((inputSearchElement) => {
-  const inputElement = inputSearchElement.element;
-  inputElement.addEventListener("focus", function () {
-    inputElement.placeholder = "";
-    // const dropDownList =
-    //   inputSearchElement.element.parentNode.parentNode.querySelector(
-    //     ".dropdown-list"
-    //   );
-    // dropDownList.classList.toggle("hidden");
-  });
-});
-inputSearchElements.forEach((inputSearchElement) => {
-  const inputElement = inputSearchElement.element;
-  inputElement.addEventListener("blur", function () {
-    // const dropDownList =
-    //   inputSearchElement.element.parentNode.parentNode.querySelector(
-    //     ".dropdown-list"
-    //   );
-    // dropDownList.classList.toggle("hidden");
-
-    if (inputSearchElement.buttonClass.slice(8) == "ingredient") {
-      inputElement.placeholder = "Ingrédients";
-    } else if (inputSearchElement.buttonClass.slice(8) == "appliance") {
-      inputElement.placeholder = "Appareils";
-    } else {
-      inputElement.placeholder = "Ustensiles";
-    }
-  });
 });

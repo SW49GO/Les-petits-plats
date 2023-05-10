@@ -21,7 +21,7 @@ class RecipeData {
     // console.log("listIngredientData", listIngredientsData);
     // Retrieve data after passed in function "removeDuplicate"
     const ingredientWithoutDuplicate = removeDuplicate(listIngredientsData);
-    console.log("ingredientWithoutDuplicate:", ingredientWithoutDuplicate);
+    // console.log("ingredientWithoutDuplicate:", ingredientWithoutDuplicate);
     this.ingredients = ingredientWithoutDuplicate;
     return ingredientWithoutDuplicate;
   }
@@ -33,7 +33,7 @@ class RecipeData {
   getAllAppliances() {
     const applianceData = this.recipes.map(({ appliance }) => appliance);
     const applianceWithoutDuplicate = removeDuplicate(applianceData);
-    console.log("applianceWithoutDuplicate:", applianceWithoutDuplicate);
+    // console.log("applianceWithoutDuplicate:", applianceWithoutDuplicate);
     this.appliances = applianceWithoutDuplicate;
     return applianceWithoutDuplicate;
   }
@@ -49,7 +49,7 @@ class RecipeData {
     // des sous-tableaux du tableau passé en argument, qui sont concaténés récursivement
     const listUstensilDatas = ustensilData.flat();
     const ustensilWithoutDuplicate = removeDuplicate(listUstensilDatas);
-    console.log("ustensilWithoutDuplicate:", ustensilWithoutDuplicate);
+    // console.log("ustensilWithoutDuplicate:", ustensilWithoutDuplicate);
     this.ustensils = ustensilWithoutDuplicate;
     return ustensilWithoutDuplicate;
   }
@@ -59,7 +59,7 @@ class RecipeData {
    * @param {string} inputWord
    */
   getSearchPrincipal(inputWord) {
-    console.log("Entre dans getSearchPrincipal");
+    // console.log("Entre dans getSearchPrincipal");
     // console.log("getSearch", word);
     // console.log("recipes=", this.recipes);
     // La méthode some() teste si au moins un élément du tableau passe le test implémenté par la fonction fournie.
@@ -129,7 +129,7 @@ class RecipeData {
     }
   }
   setDisplayListUnderAdvanceSearch() {
-    console.log("this.ingredient:", this.ingredients);
+    // console.log("this.ingredient:", this.ingredients);
     containerIngredient.innerHTML = "";
     this.ingredients.forEach((ingredient) => {
       containerIngredient.innerHTML += `<button class="button-ingredient">${ingredient}</button>`;
@@ -169,7 +169,44 @@ class RecipeData {
     // Management of the 3 Inputs on the 3 categories
     inputSearchElements.forEach((inputSearchElement) => {
       inputSearchElement.element.addEventListener("input", function (e) {
+        const dropDown =
+          inputSearchElement.element.parentNode.parentNode.querySelector(
+            ".dropdown-list"
+          );
+        const chevron =
+          inputSearchElement.element.parentNode.querySelector(
+            ".fa-chevron-down"
+          );
+        console.log(chevron);
+        chevron.classList.add("rotated");
+        const placeHolder = inputSearchElement.element.placeholder;
+        console.log("placeHolder:", placeHolder);
+        console.log(dropDown);
+        let newPlaceholder;
+        if (dropDown.classList.contains("list-appliances")) {
+          newPlaceholder = "Appareils";
+        } else if (dropDown.classList.contains("list-ustensils")) {
+          newPlaceholder = "Ustensils";
+        } else {
+          newPlaceholder = "Ingrédients";
+        }
         const inputValue = removeAccentsUppercase(e.target.value);
+        if (inputValue === "") {
+          dropDown.style.display = "none";
+          inputSearchElement.element.classList.remove(
+            "open",
+            "changePlaceholder"
+          );
+          inputSearchElement.element.classList.add("close");
+          inputSearchElement.element.placeholder = newPlaceholder;
+          chevron.classList.remove("rotated");
+        } else {
+          dropDown.style.display = "block";
+          inputSearchElement.element.classList.add("open", "changePlaceholder");
+          inputSearchElement.element.classList.remove("close");
+
+          // inputSearchElement.element.nextSibling.classList.add("rotated");
+        }
         const listButtonUnder = document.querySelectorAll(
           inputSearchElement.buttonClass
         );

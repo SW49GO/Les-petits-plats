@@ -12,8 +12,11 @@ input {
   padding-left: 0.5rem;
 }
 ::placeholder {
-  font-size: 1rem;
+  font-size: 1.125rem;
   color: #fff;
+}
+:focus::placeholder {
+  color: transparent;
 }
 .hidden {
   display: none;
@@ -82,6 +85,9 @@ header {
   background-color: #3282f7;
   outline-color: #3282f7;
 }
+.input-ingredient > input:focus .list-ingredients {
+  display: block;
+}
 .input-appliance > input {
   background-color: #68d9a4;
   outline-color: #68d9a4;
@@ -93,19 +99,32 @@ header {
 .input-ingredient > input,
 .input-appliance > input,
 .input-ustensil > input {
-  width: 10rem;
+  font-size: 1.125rem;
   height: 4rem;
   border: none;
-  border-radius: 0.5rem;
   color: #fff;
   outline: none;
   border: none;
+}
+.changePlaceholder::placeholder {
+  opacity: 50%;
+}
+.open {
+  width: 100%;
+  border-radius: 0.5rem 0.5rem 0 0;
+  background-color: #3282f7;
+}
+.close {
+  border-radius: 0.5rem;
 }
 .fa-chevron-down {
   position: absolute;
   right: 1.5rem;
   top: 1.5rem;
   color: #fff;
+}
+.rotated {
+  transform: rotate(180deg);
 }
 /*********************Display Recipes*******************************/
 .container-articles {
@@ -117,11 +136,12 @@ header {
 }
 .link-recipe {
   border: none;
+  border-radius: 0.5rem;
 }
 .article-recipe {
   display: flex;
   flex-direction: column;
-  border-radius: 0.3rem;
+  border-radius: 0.5rem;
   overflow: hidden;
 }
 .article-picture {
@@ -133,8 +153,9 @@ header {
   display: flex;
   justify-content: space-between;
   background-color: #e7e7e7;
+  font-size: 1.125rem;
   padding: 0.8rem;
-  height: 3rem;
+  height: 4rem;
 }
 .title-recipe {
   text-align: left;
@@ -151,6 +172,7 @@ header {
 }
 .description p,
 .composition p {
+  font-size: 0.75rem;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -185,6 +207,11 @@ header {
 .button-ingredient {
   background-color: #3282f7;
 }
+.list-ingredients,
+.list-appliances,
+.list-ustensils {
+  display: none;
+}
 .list-appliances,
 .button-appliance {
   background-color: #68d9a4;
@@ -197,6 +224,7 @@ header {
 .button-appliance,
 .button-ustensil {
   display: block;
+  font-size: 1.125rem;
   border: none;
   color: #fff;
   padding: 0.3rem;
@@ -215,7 +243,7 @@ header {
   padding: 0.3rem 0.6rem;
   margin-right: 1rem;
   color: #fff;
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   font-weight: 700;
   border-radius: 0.3rem;
 }
