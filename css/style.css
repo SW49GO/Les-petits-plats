@@ -85,9 +85,7 @@ header {
   background-color: #3282f7;
   outline-color: #3282f7;
 }
-.input-ingredient > input:focus .list-ingredients {
-  display: block;
-}
+
 .input-appliance > input {
   background-color: #68d9a4;
   outline-color: #68d9a4;
@@ -104,7 +102,6 @@ header {
   border: none;
   color: #fff;
   outline: none;
-  border: none;
 }
 .changePlaceholder::placeholder {
   opacity: 50%;
@@ -112,7 +109,6 @@ header {
 .open {
   width: 100%;
   border-radius: 0.5rem 0.5rem 0 0;
-  background-color: #3282f7;
 }
 .close {
   border-radius: 0.5rem;
@@ -133,6 +129,7 @@ header {
   gap: 3rem;
   width: 90%;
   margin: 0 auto;
+  padding-bottom: 5rem;
 }
 .link-recipe {
   border: none;
@@ -196,16 +193,18 @@ header {
 .list-ustensils,
 .list-ingredients {
   position: relative;
+  top: -0.1rem;
   column-count: 3;
   border-radius: 0 0 0.5rem 0.5rem;
   font-size: 1.125rem;
   color: #fff;
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
   z-index: 1;
 }
 .list-ingredients,
 .button-ingredient {
   background-color: #3282f7;
+  border: none;
 }
 .list-ingredients,
 .list-appliances,
@@ -302,6 +301,10 @@ h2 {
 .theIngredients p,
 .theAppliances p {
   padding-left: 2rem;
+}
+.theIngredients p {
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 .theAppliances h2 {
   color: #d04f4f;

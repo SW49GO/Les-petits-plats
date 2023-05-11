@@ -119,6 +119,26 @@ function setupInputSearchElements(
 
     const inputSearch = inputSearchElement.element;
     chevronElement.classList.toggle("rotated");
+    if (!chevronElement.classList.contains("rotated")) {
+      inputSearch.value = "";
+
+      console.log("original", recipesOriginal);
+      console.log("recettePrincipe", recipeAfterSearchPrincipal);
+      console.log("recipeWithTag", recipesWithTagList);
+      if (
+        recipeAfterSearchPrincipal.length === 0 &&
+        recipesWithTagList.length !== 0
+      ) {
+        displayAllRecipes(recipesWithTagList);
+      } else if (recipeAfterSearchPrincipal.length !== 0) {
+        displayAllRecipes(recipeAfterSearchPrincipal);
+      } else {
+        displayAllRecipes(recipesOriginal);
+      }
+
+      console.log("original", recipesOriginal);
+      console.log("recettePrincipe", recipeAfterSearchPrincipal);
+    }
 
     const buttonClass = inputSearchElement.buttonClass.slice(8);
     const isIngredient = buttonClass.startsWith("i");

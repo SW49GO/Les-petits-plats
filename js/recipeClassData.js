@@ -68,7 +68,7 @@ class RecipeData {
         )
     );
 
-    // Remplacement de la liste des recettes par celle qui découle de la recherche principal
+    // Replacement of the list of recipes by the one resulting from the main search
     this.recipePrincipal = newRecipe;
     // console.log("newRecipe:", newRecipe);
     if (newRecipe) {
@@ -251,12 +251,15 @@ class RecipeData {
           // Remove the tag from the "allTags" array
           allTags = allTags.filter((tag) => tag.word !== tagText);
           spanOfTag.remove();
+          console.log("delete", recipesWithTagList);
           this.getSearchByTagList();
         }.bind(this)
       );
     });
   }
   getSearchByTagList() {
+    // Reinitialize list of recipes with tags
+    recipesWithTagList = [];
     // Check if there are already tags
     if (allTags.length == 0 && recipeAfterSearchPrincipal.length == 0) {
       displayAllRecipes(recipesOriginal);
@@ -324,8 +327,9 @@ class RecipeData {
         return singularAndPlural.every((word) => wordsFound.has(word));
       });
 
-      // console.log(recipesWithTag);
-
+      console.log("recipesWithTag", recipesWithTag);
+      // Retrieve all recipes with tags
+      recipesWithTagList = recipesWithTag;
       // Instantiating the class with "this.recipes=recipesWithTag" to generate the recipes display
       displayAllRecipes(recipesWithTag);
     }

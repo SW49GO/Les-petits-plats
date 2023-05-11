@@ -4,6 +4,7 @@
 let recipesOriginal = [];
 let recipeAfterSearchPrincipal = [];
 let allTags = [];
+let recipesWithTagList = [];
 
 /**
  * Function to retrieve data from recipes.json file
