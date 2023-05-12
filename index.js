@@ -8,6 +8,7 @@ let recipesWithTagList = [];
 
 /**
  * Function to retrieve data from recipes.json file
+ * Called by init()
  * @returns all the recipes
  */
 async function getJsonDataRecipes() {
@@ -27,11 +28,11 @@ async function getJsonDataRecipes() {
 }
 /**
  * Function to retrieve recipe display
+ * Called by init()
  * @param {object} recipes
  */
 async function displayAllRecipes(recipes) {
-  //   console.log("recipes:", recipes);
-  //   console.log("displayAllRecipes:", displayAllRecipes);
+  // Instantiation of the "RecipeData" class, retrieval HTML element of the recipes
   const recipesData = new RecipeData(recipes);
   const displayRecipes = recipesData.setDisplayRecipes();
   const container = document.querySelector(".container-recipes");
@@ -43,10 +44,11 @@ async function displayAllRecipes(recipes) {
 }
 /**
  * Function to display the different lists (Ingredients, Appliances and Utensils)
+ * Called by displayAllRecipes(recipes)
  * @param {object} recipes
  */
 async function displayListUnderSecondarySearch(recipes) {
-  // Retrieval of different lists
+  // Instantiation of the "RecipeData" class, retrieval of different lists
   const listUnderSearch = new RecipeData(recipes);
   listUnderSearch.getAllIngredients();
   listUnderSearch.getAllAppliances();
@@ -54,18 +56,23 @@ async function displayListUnderSecondarySearch(recipes) {
   // Display the different lists
   listUnderSearch.setDisplayListUnderAdvanceSearch();
 }
+/**
+ * Function to initialize the Main search
+ * Called by init()
+ * @param {object} recipes
+ */
 async function handlerPrincipalSearch(recipes) {
   searchPrincipal.addEventListener("input", (e) => {
     let inputWord = e.target.value;
     inputWord = removeAccentsUppercase(inputWord);
-    console.log("inputWord:", inputWord);
+
     if (inputWord.length >= 3) {
+      // Instantiation of the "RecipeData" class, retrieval recipes after Main search
       const newDisplay = new RecipeData(recipes);
       newDisplay.getSearchPrincipal(inputWord);
       const newArray = newDisplay.recipePrincipal;
       // Storage in an array with Main search result
       recipeAfterSearchPrincipal = newArray;
-      // console.log("recipeAfterSearchPrincipal:", recipeAfterSearchPrincipal);
       // Revival of the display of recipes and updates of lists
       displayAllRecipes(newArray);
     } else {
@@ -84,10 +91,9 @@ async function handlerPrincipalSearch(recipes) {
  */
 async function init() {
   const { recipes } = await getJsonDataRecipes();
-  //   console.log("recipes:", recipes);
+  // Initialize table with the data "recipes"
   recipesOriginal = recipes;
   displayAllRecipes(recipes);
-  //   displayListUnderSecondarySearch(recipes);
   handlerPrincipalSearch(recipes);
 }
 init();

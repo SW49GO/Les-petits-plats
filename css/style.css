@@ -15,6 +15,10 @@ input {
   font-size: 1.125rem;
   color: #fff;
 }
+::-moz-placeholder {
+  color: #fff;
+  opacity: 1;
+}
 :focus::placeholder {
   color: transparent;
 }

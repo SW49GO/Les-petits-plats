@@ -43,6 +43,9 @@ const chevronUstensil = document
   .querySelector(".input-ustensil")
   .getElementsByTagName("i")[0];
 
+/********************************************************************/
+/********************************************************************/
+
 /**
  * Function to remove accents and capitalize the searched word
  * @param {string} inputWord
@@ -62,13 +65,11 @@ const removeAccentsUppercase = (inputWord) => {
  * @returns {array}
  */
 function removeDuplicate(array) {
-  // console.log("array:", array);
   // Use the "reduce" method to traverse the array only once
   // and returns the result of the "original" array
   const unique = array.reduce(
     (acc, curr) => {
       const normalizedCurr = removeAccentsUppercase(curr);
-      // console.log("normalizedCurr:", normalizedCurr);
       if (!acc.normalized.includes(normalizedCurr)) {
         acc.normalized.push(normalizedCurr);
         acc.original.push(curr.charAt(0).toUpperCase() + curr.slice(1));
@@ -80,7 +81,6 @@ function removeDuplicate(array) {
 
   // Sorting in alphabetical order according to the French standard
   unique.sort((a, b) => a.localeCompare(b, "fr"));
-  // console.log("unique:", unique);
 
   // New table with changes to words to be uniquely replaced
   const uniqueTransformed = unique.reduce((acc, inputWord) => {
@@ -115,16 +115,11 @@ function setupInputSearchElements(
   containerElement
 ) {
   chevronElement.addEventListener("click", function () {
-    console.log("click");
-
     const inputSearch = inputSearchElement.element;
     chevronElement.classList.toggle("rotated");
     if (!chevronElement.classList.contains("rotated")) {
       inputSearch.value = "";
 
-      console.log("original", recipesOriginal);
-      console.log("recettePrincipe", recipeAfterSearchPrincipal);
-      console.log("recipeWithTag", recipesWithTagList);
       if (
         recipeAfterSearchPrincipal.length === 0 &&
         recipesWithTagList.length !== 0
@@ -135,9 +130,6 @@ function setupInputSearchElements(
       } else {
         displayAllRecipes(recipesOriginal);
       }
-
-      console.log("original", recipesOriginal);
-      console.log("recettePrincipe", recipeAfterSearchPrincipal);
     }
 
     const buttonClass = inputSearchElement.buttonClass.slice(8);
@@ -169,7 +161,6 @@ function setupInputSearchElements(
 inputSearchElements.forEach(function (inputSearchElement, index) {
   const chevronElement = document.querySelectorAll(".fa-chevron-down")[index];
   const containerElement = document.querySelectorAll(".dropdown-list")[index];
-  console.log("containerElement:", containerElement);
 
   setupInputSearchElements(
     inputSearchElement,
@@ -177,11 +168,13 @@ inputSearchElements.forEach(function (inputSearchElement, index) {
     containerElement
   );
 });
-
-async function displayModal(id) {
-  const recipes = await getJsonDataRecipes();
-  // Trouver la recette correspondante
-  const theRecipe = recipes.recipes.find((recipe) => recipe.id === id);
+/**
+ * Function to display the selected recipe by user
+ * @param {number} id
+ */
+function displayModal(id) {
+  // Find in all recipes "id" of the selected recipe
+  const theRecipe = recipesOriginal.find((recipe) => recipe.id === id);
 
   containerRecipes.style.display = "none";
   modal.classList.toggle("hidden");
@@ -199,6 +192,9 @@ async function displayModal(id) {
   article += `</div></article>`;
   modal.innerHTML = article;
 }
+/**
+ * Function to close the modal
+ */
 function closeModal() {
   modal.classList.toggle("hidden");
   containerRecipes.style.display = "block";
