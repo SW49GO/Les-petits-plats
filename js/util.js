@@ -119,16 +119,16 @@ function setupInputSearchElements(
     chevronElement.classList.toggle("rotated");
     if (!chevronElement.classList.contains("rotated")) {
       inputSearch.value = "";
-
       if (
         recipeAfterSearchPrincipal.length === 0 &&
         recipesWithTagList.length !== 0
       ) {
         displayAllRecipes(recipesWithTagList);
-      } else if (recipeAfterSearchPrincipal.length !== 0) {
-        displayAllRecipes(recipeAfterSearchPrincipal);
-      } else {
-        displayAllRecipes(recipesOriginal);
+      } else if (
+        recipeAfterSearchPrincipal.length !== 0 &&
+        recipesWithTagList.length !== 0
+      ) {
+        displayAllRecipes(recipesWithTagList);
       }
     }
 

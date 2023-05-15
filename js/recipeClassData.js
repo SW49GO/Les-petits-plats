@@ -14,7 +14,7 @@ class RecipeData {
    * * @returns {array}
    */
   getAllIngredients() {
-    // Retrieve without duplicate (except for differences in accent and spelling mistakes)
+    // Retrieve all Ingrédients
     const listIngredientsData = this.recipes.reduce((acc, { ingredients }) => {
       return [...acc, ...ingredients.map(({ ingredient }) => ingredient)];
     }, []);
@@ -104,7 +104,6 @@ class RecipeData {
           }
           containerHTML += `${ingredient.ingredient}: ${quantity} ${unit}<br>`;
         });
-
         containerHTML += `</p></div>
                          <div class="description">
                             <p >${recipe.description}</p>
@@ -112,7 +111,6 @@ class RecipeData {
                     </div>
                 </article></button>`;
       });
-
       containerHTML += `</div>`;
 
       return containerHTML;
@@ -124,7 +122,6 @@ class RecipeData {
    * Called by displayListUnderSecondarySearch(recipes)
    */
   setDisplayListUnderAdvanceSearch() {
-    // console.log("this.ingredient:", this.ingredients);
     containerIngredient.innerHTML = "";
     this.ingredients.forEach((ingredient) => {
       containerIngredient.innerHTML += `<button class="button-ingredient">${ingredient}</button>`;
@@ -149,7 +146,6 @@ class RecipeData {
       allButtons.forEach((element) => {
         if (element.style.display !== "none") {
           element.addEventListener("click", function (e) {
-            console.log("element:", element);
             const tag = { word: e.target.textContent, button: categorie };
             allTags.push(tag);
             // Called to create DOM "Tag"
@@ -162,6 +158,7 @@ class RecipeData {
     eventsToButtons(".button-appliance", "appliance");
     eventsToButtons(".button-ustensil", "ustensil");
 
+    //***********************************************************/
     // Manage the behavior of DOM elements when there is an input
     inputSearchElements.forEach((inputSearchElement) => {
       inputSearchElement.element.addEventListener("input", function (e) {
