@@ -269,18 +269,22 @@ class RecipeData {
     } else {
       // Create an array containing each word in the list of tags by raising its last letter
       // in order to manage singulars and plurals
+
       const singularAndPlural = [];
-      allTags.forEach(({ word }) => {
+      allTags.forEach(({ word, button }) => {
         const words = word.split(",");
         words.forEach((mot) => {
           // To solve the problem of "Maïs" and "Maïzzena" -> "Maï", "mot" must be > 4
           if (mot.length > 4) {
-            singularAndPlural.push(mot.slice(0, -1));
+            singularAndPlural.push({ word: mot.slice(0, -1), button });
+            // singularAndPlural.push(mot.slice(0, -1));
           } else {
-            singularAndPlural.push(mot);
+            singularAndPlural.push({ word: mot, button });
+            // singularAndPlural.push(mot);
           }
         });
       });
+
       // Definition of the list of current recipes generated or not by the main search
       const listRecipes =
         recipeAfterSearchPrincipal.length > 0
@@ -294,40 +298,48 @@ class RecipeData {
         recipe.ingredients.forEach((ingredient) => {
           // Lowercase the 1st letter of the words "ingredient" and "singularAndPlural" to handle words starting with a lowercase
           const ingredientFirstLowerCase =
-            ingredient.ingredient.charAt(0).toLowerCase +
+            ingredient.ingredient.charAt(0).toLowerCase() +
             ingredient.ingredient.slice(1);
 
-          singularAndPlural.forEach((word) => {
-            const singularAndPluralFirstLowerCase =
-              word.charAt(0).toLowerCase + word.slice(1);
-            if (
-              ingredientFirstLowerCase.includes(singularAndPluralFirstLowerCase)
-            ) {
-              wordsFound.add(word);
+          singularAndPlural.forEach(({ word, button }) => {
+            if (button === "ingredient") {
+              const singularAndPluralFirstLowerCase =
+                word.charAt(0).toLowerCase() + word.slice(1);
+              if (
+                ingredientFirstLowerCase.includes(
+                  singularAndPluralFirstLowerCase
+                )
+              ) {
+                wordsFound.add(word);
+              }
             }
           });
         });
         // AND for in each Device
-        singularAndPlural.forEach((word) => {
-          if (recipe.appliance.includes(word)) {
-            wordsFound.add(word);
+        singularAndPlural.forEach(({ word, button }) => {
+          if (button === "appliance") {
+            if (recipe.appliance.includes(word)) {
+              wordsFound.add(word);
+            }
           }
         });
         // And in the list of Utensils
         recipe.ustensils.forEach((ustensil) => {
-          singularAndPlural.forEach((word) => {
-            if (ustensil.toUpperCase().includes(word.toUpperCase())) {
-              wordsFound.add(word);
+          singularAndPlural.forEach(({ word, button }) => {
+            if (button === "ustensil") {
+              if (ustensil.toUpperCase().includes(word.toUpperCase())) {
+                wordsFound.add(word);
+              }
             }
           });
         });
         // If all the words of "singularAndPlurial" were found in "wordsFound", return "true"
         // So keep the current recipe
-        return singularAndPlural.every((word) => wordsFound.has(word));
+        return singularAndPlural.every(({ word }) => wordsFound.has(word));
       });
-      // Retrieval all recipes with tags
+      //Retrieval all recipes with tags
       recipesWithTagList = recipesWithTag;
-      // Instantiating the class with "this.recipes=recipesWithTag" to generate the recipes display
+      //Instantiating the class with "this.recipes=recipesWithTag" to generate the recipes display
       displayAllRecipes(recipesWithTag);
     }
   }

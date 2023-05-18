@@ -183,7 +183,9 @@ function displayModal(id) {
   let article = `<h1>${theRecipe.name}<i class="fa-solid fa-xmark" onclick="closeModal()"></i></h1><article class="modal-article"><div class="recipe-picture"></div><p class="serving">${theRecipe.name} pour ${theRecipe.servings} personne(s)</p><p>Temps de préparation : ${theRecipe.time} mn</p><div class="theIngredients"><h2>Liste des ingrédients :</h2>`;
   theRecipe.ingredients.forEach((ingredient) => {
     const unit = ingredient.unit || "";
-    article += `<p>${ingredient.ingredient} : ${ingredient.quantity} ${unit}</p>`;
+    const quantity = ingredient.quantity || "";
+
+    article += `<p>${ingredient.ingredient} : ${quantity} ${unit}</p>`;
   });
   article += `</div><div class="theAppliances"><h2>Liste des appareils et ustensiles nécessaire</h2><p>Appareil(s) : ${theRecipe.appliance}</p><p>Ustensile(s) : ${theRecipe.ustensils}</p></div><div class="theDescription"><h2>Description :</h2>`;
   const descriptionTab = theRecipe.description.split(".");
