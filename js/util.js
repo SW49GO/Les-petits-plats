@@ -74,10 +74,10 @@ function removeDuplicate(array) {
         acc.normalized.push(normalizedCurr);
         acc.original.push(curr.charAt(0).toUpperCase() + curr.slice(1));
       }
-      return acc; // ex: {normalizes=['POMME'], original=['Pomme']}
+      return acc;
     },
     { normalized: [], original: [] }
-  ).original; //-> return original=['Pomme']
+  ).original;
 
   // Sorting in alphabetical order according to the French standard
   unique.sort((a, b) => a.localeCompare(b, "fr"));
