@@ -74,15 +74,16 @@ class RecipeData {
       }
       if (!recipeMatched) {
         const ingredients = recipe.ingredients;
-        for (let j = 0; j < ingredients.length; j++) {
+        let j = 0;
+        while (j < ingredients.length && !recipeMatched) {
           const ingredient = ingredients[j];
           if (
             removeAccentsUppercase(ingredient.ingredient).includes(inputWord)
           ) {
             newRecipe.push(recipe);
             recipeMatched = true;
-            break;
           }
+          j++;
         }
       }
     }
