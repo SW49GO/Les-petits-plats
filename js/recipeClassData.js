@@ -313,11 +313,17 @@ class RecipeData {
             }
           });
         });
+
         // AND for in each Device
         singularAndPlural.map(({ word, button }, index) => {
           if (button === "appliance") {
             if (word === "Casserole") {
-              singularAndPlural[index].word = "Casserolle";
+              if (
+                recipe.appliance.includes(word) ||
+                recipe.appliance.includes("Casserolle")
+              ) {
+                wordsFound.add(word);
+              }
             }
             if (word === "Poêle") {
               singularAndPlural[index].word = "Poële";
@@ -346,6 +352,7 @@ class RecipeData {
             }
           });
         });
+
         // If all the words of "singularAndPlurial" were found in "wordsFound", return "true"
         // So keep the current recipe
         return singularAndPlural.every(({ word }) => wordsFound.has(word));
