@@ -314,12 +314,18 @@ class RecipeData {
           });
         });
         // AND for in each Device
-        singularAndPlural.forEach(({ word, button }) => {
+        singularAndPlural.map(({ word, button }, index) => {
           if (button === "appliance") {
-            if (
-              recipe.appliance.includes(word) ||
-              recipe.appliance.includes("Casserolle")
-            ) {
+            if (word === "Casserole") {
+              singularAndPlural[index].word = "Casserolle";
+            }
+            if (word === "Poêle") {
+              singularAndPlural[index].word = "Poële";
+            }
+            if (word === "Poêle à crêpe") {
+              singularAndPlural[index].word = "Poële à crêpe";
+            }
+            if (recipe.appliance.includes(word)) {
               wordsFound.add(word);
             }
           }
@@ -330,6 +336,9 @@ class RecipeData {
             if (button === "ustensil") {
               if (word === "Casserole") {
                 singularAndPlural[index].word = "Casserolle";
+              }
+              if (word === "Poêle à frire") {
+                singularAndPlural[index].word = "Poelle à frire";
               }
               if (ustensil.toUpperCase().includes(word.toUpperCase())) {
                 wordsFound.add(word);

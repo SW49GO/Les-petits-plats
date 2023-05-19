@@ -86,6 +86,8 @@ function removeDuplicate(array) {
   const uniqueTransformed = unique.reduce((acc, inputWord) => {
     const transformedWord = inputWord
       .replace("Casserolle", "Casserole")
+      .replace("Poële", "Poêle")
+      .replace("Poelle", "Poêle")
       .replace(/\bPomme\b/gi, "Pommes")
       .replace(/\bKiwi\b/gi, "Kiwis")
       .replace(/\bHuile d'olive\b/gi, "Huile d'olives")
@@ -180,10 +182,15 @@ function displayModal(id) {
   const modifiedUstensils = theRecipe.ustensils
     .map((ustensilsString) => {
       return ustensilsString.split(",").map((ustensil) => {
-        if (ustensil.trim() === "casserolle") {
+        const trimmedUstensil = ustensil.trim().toLowerCase();
+        if (trimmedUstensil === "casserolle") {
           return "Casserole";
+        } else if (trimmedUstensil === "poelle à frire") {
+          return "Poêle à frire";
         } else {
-          return ustensil.charAt(0).toUpperCase() + ustensil.slice(1);
+          return (
+            trimmedUstensil.charAt(0).toUpperCase() + trimmedUstensil.slice(1)
+          );
         }
       });
     })
@@ -192,7 +199,11 @@ function displayModal(id) {
   // Modified appliance spelling for "Casserole"
   const modifiedAppliance =
     theRecipe.appliance === "Casserolle"
-      ? (theRecipe.appliance = "Casserole")
+      ? "Casserole"
+      : theRecipe.appliance === "Poële"
+      ? "Poêle"
+      : theRecipe.appliance === "Poële à crêpe"
+      ? "Poêle à crêpe"
       : theRecipe.appliance;
 
   containerRecipes.style.display = "none";
