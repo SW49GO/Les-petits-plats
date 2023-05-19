@@ -58,26 +58,21 @@ class RecipeData {
    * @param {string} inputWord
    */
   getSearchPrincipal(inputWord) {
-    const newRecipe = [];
+    let newRecipe = [];
     for (let i = 0; i < this.recipes.length; i++) {
       let recipeMatched = false;
       const recipe = this.recipes[i];
 
-      // Checking the recipe title
       if (removeAccentsUppercase(recipe.name).includes(inputWord)) {
         newRecipe.push(recipe);
         recipeMatched = true;
       }
-
-      // If the recipe has not yet been found, check the description
       if (!recipeMatched) {
         if (removeAccentsUppercase(recipe.description).includes(inputWord)) {
           newRecipe.push(recipe);
           recipeMatched = true;
         }
       }
-
-      // If the recipe has not yet been found, check the ingredients
       if (!recipeMatched) {
         const ingredients = recipe.ingredients;
         for (let j = 0; j < ingredients.length; j++) {
@@ -95,8 +90,7 @@ class RecipeData {
 
     // Replacement of the list of recipes by the one resulting from the main search
     this.recipePrincipal = newRecipe;
-
-    if (newRecipe.length > 0) {
+    if (newRecipe) {
       this.recipes = newRecipe;
     }
   }
