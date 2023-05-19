@@ -47,7 +47,6 @@ class RecipeData {
     const ustensilWithoutDuplicate = removeDuplicate(
       this.recipes.flatMap(({ ustensils }) => ustensils)
     );
-
     this.ustensils = ustensilWithoutDuplicate;
     return ustensilWithoutDuplicate;
   }
@@ -284,7 +283,6 @@ class RecipeData {
           }
         });
       });
-
       // Definition of the list of current recipes generated or not by the main search
       const listRecipes =
         recipeAfterSearchPrincipal.length > 0
@@ -325,8 +323,11 @@ class RecipeData {
         });
         // And in the list of Utensils
         recipe.ustensils.forEach((ustensil) => {
-          singularAndPlural.forEach(({ word, button }) => {
+          singularAndPlural.map(({ word, button }, index) => {
             if (button === "ustensil") {
+              if (word === "Casserole") {
+                singularAndPlural[index].word = "Casserolle";
+              }
               if (ustensil.toUpperCase().includes(word.toUpperCase())) {
                 wordsFound.add(word);
               }
