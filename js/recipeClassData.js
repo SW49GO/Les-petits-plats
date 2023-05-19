@@ -316,7 +316,10 @@ class RecipeData {
         // AND for in each Device
         singularAndPlural.forEach(({ word, button }) => {
           if (button === "appliance") {
-            if (recipe.appliance.includes(word)) {
+            if (
+              recipe.appliance.includes(word) ||
+              recipe.appliance.includes("Casserolle")
+            ) {
               wordsFound.add(word);
             }
           }

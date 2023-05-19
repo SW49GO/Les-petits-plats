@@ -176,6 +176,24 @@ inputSearchElements.forEach(function (inputSearchElement, index) {
 function displayModal(id) {
   // Find in all recipes "id" of the selected recipe
   const theRecipe = recipesOriginal.find((recipe) => recipe.id === id);
+  // Modified the render of ustensils elements
+  const modifiedUstensils = theRecipe.ustensils
+    .map((ustensilsString) => {
+      return ustensilsString.split(",").map((ustensil) => {
+        if (ustensil.trim() === "casserolle") {
+          return "Casserole";
+        } else {
+          return ustensil.charAt(0).toUpperCase() + ustensil.slice(1);
+        }
+      });
+    })
+    .join(", ");
+
+  // Modified appliance spelling for "Casserole"
+  const modifiedAppliance =
+    theRecipe.appliance === "Casserolle"
+      ? (theRecipe.appliance = "Casserole")
+      : theRecipe.appliance;
 
   containerRecipes.style.display = "none";
   modal.classList.toggle("hidden");
@@ -187,7 +205,7 @@ function displayModal(id) {
 
     article += `<p>${ingredient.ingredient} : ${quantity} ${unit}</p>`;
   });
-  article += `</div><div class="theAppliances"><h2>Liste des appareils et ustensiles nécessaire</h2><p>Appareil(s) : ${theRecipe.appliance}</p><p>Ustensile(s) : ${theRecipe.ustensils}</p></div><div class="theDescription"><h2>Description :</h2>`;
+  article += `</div><div class="theAppliances"><h2>Liste des appareils et ustensiles nécessaire</h2><p>Appareil(s) : ${modifiedAppliance}</p><p>Ustensile(s) : ${modifiedUstensils}</p></div><div class="theDescription"><h2>Description :</h2>`;
   const descriptionTab = theRecipe.description.split(".");
   for (const description of descriptionTab) {
     article += `<p>- ${description}</p><br>`;
