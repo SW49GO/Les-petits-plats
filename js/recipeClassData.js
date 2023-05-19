@@ -14,12 +14,12 @@ class RecipeData {
    * * @returns {array}
    */
   getAllIngredients() {
-    // Retrieve all Ingrédients
-    const listIngredientsData = this.recipes.reduce((acc, { ingredients }) => {
-      return [...acc, ...ingredients.map(({ ingredient }) => ingredient)];
-    }, []);
-    // Retrieve data after passed in function "removeDuplicate"
-    const ingredientWithoutDuplicate = removeDuplicate(listIngredientsData);
+    // Retrieve all Ingrédients and passed in function "removeDuplicate"
+    const ingredientWithoutDuplicate = removeDuplicate(
+      this.recipes.reduce((acc, { ingredients }) => {
+        return [...acc, ...ingredients.map(({ ingredient }) => ingredient)];
+      }, [])
+    );
     this.ingredients = ingredientWithoutDuplicate;
     return ingredientWithoutDuplicate;
   }
@@ -29,8 +29,10 @@ class RecipeData {
    * * @returns {array}
    */
   getAllAppliances() {
-    const applianceData = this.recipes.map(({ appliance }) => appliance);
-    const applianceWithoutDuplicate = removeDuplicate(applianceData);
+    // Retrieve all Appliances
+    const applianceWithoutDuplicate = removeDuplicate(
+      this.recipes.map(({ appliance }) => appliance)
+    );
     this.appliances = applianceWithoutDuplicate;
     return applianceWithoutDuplicate;
   }
@@ -41,11 +43,11 @@ class RecipeData {
    * @returns {array}
    */
   getAllUstensils() {
-    const ustensilData = this.recipes.map(({ ustensils }) => ustensils);
-    // La méthode flat() permet de créer un nouveau tableau contenant les éléments
-    // des sous-tableaux du tableau passé en argument, qui sont concaténés récursivement
-    const listUstensilDatas = ustensilData.flat();
-    const ustensilWithoutDuplicate = removeDuplicate(listUstensilDatas);
+    // Retrieve all Ustensils
+    const ustensilWithoutDuplicate = removeDuplicate(
+      this.recipes.flatMap(({ ustensils }) => ustensils)
+    );
+
     this.ustensils = ustensilWithoutDuplicate;
     return ustensilWithoutDuplicate;
   }
@@ -267,20 +269,18 @@ class RecipeData {
     if (allTags.length == 0 && recipeAfterSearchPrincipal.length == 0) {
       displayAllRecipes(recipesOriginal);
     } else {
-      // Create an array containing each word in the list of tags by raising its last letter
+      // Create an array containing each "word" and value of "button" in the list of tags by raising its last letter
       // in order to manage singulars and plurals
-
       const singularAndPlural = [];
+
       allTags.forEach(({ word, button }) => {
         const words = word.split(",");
-        words.forEach((mot) => {
-          // To solve the problem of "Maïs" and "Maïzzena" -> "Maï", "mot" must be > 4
-          if (mot.length > 4) {
-            singularAndPlural.push({ word: mot.slice(0, -1), button });
-            // singularAndPlural.push(mot.slice(0, -1));
+        words.forEach((item) => {
+          // To solve the problem of "Maïs" and "Maïzzena" -> "Maï", "item" must be > 4
+          if (item.length > 4 && item.slice(-1) === "s") {
+            singularAndPlural.push({ word: item.slice(0, -1), button });
           } else {
-            singularAndPlural.push({ word: mot, button });
-            // singularAndPlural.push(mot);
+            singularAndPlural.push({ word: item, button });
           }
         });
       });
