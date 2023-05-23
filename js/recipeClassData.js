@@ -3,10 +3,10 @@
 class RecipeData {
   constructor(data) {
     this.recipes = data;
-    this.ingredients = this.getAllIngredients;
-    this.appliances = this.getAllAppliances;
-    this.ustensils = this.getAllUstensils;
-    this.recipePrincipal = this.getSearchPrincipal;
+    this.ingredients = [];
+    this.appliances = [];
+    this.ustensils = [];
+    this.recipePrincipal = [];
   }
   /**
    * Function to retrieve all Ingredients
